@@ -29,56 +29,43 @@ def getName(s):
 
 @app.route("/getResource")
 def getResource():
-	ldpr = request.args.get('ldpr')
+	url = request.args.get('url')
 
-	r = requests.get(ldpr)
-	linkHeaders = r.headers.get("link")
-	
+	g = Graph ()
+	g.parse(url,format="turtle")
 
-	resource = {}
-	resource["contentType"] = r.headers['content-type']
-	
-	resource["iri"] = ldpr
-	resource["name"] = getName(ldpr)
-	resource["status"] = r.status_code
-	# get rdf content for resource
-	# get all children
-	# for each children check if container or not
-	# if container add a dummy children
-	
-	if (r.status_code != 200):
-		return json.dumps(resource)
-	
-	
-	ldprContent = r.text
-	resource["type"] = []	
-	for link in requests.utils.parse_header_links(linkHeaders):
-		if link["rel"] == "type":
-			ldprType = link["url"]
-			ldprType = ldprType.replace("http://www.w3.org/ns/ldp#","")
-			resource["type"].append(ldprType)	
-	
-	if "RDFSource" not in resource["type"]:
-		resource["data"] = r.text
-		return json.dumps(resource)
+	query = """
+	PREFIX pk: <http://opensensingcity.emse.fr/parking/ontology/>
+	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+	SELECT ?parking ?nbCarAv ?nbMotocycleAv ?nbBicycleAv ?lat ?long ?label
+	WHERE {
+		?parking a pk:ParkingPlace .
+		OPTIONAL { ?parking rdfs:label  ?label . }
+		OPTIONAL { ?parking pk:nbCarParkingPlaces ?nbCarAv . }
+		OPTIONAL { ?parking pk:nbBicycleParkingPlaces ?nbBicyleAv . }
+		OPTIONAL { ?parking pk:nbMotorcycleParkingPlaces ?nbMotocycleAv . }
+		OPTIONAL { ?parking pk:nbBicycleParkingPlaces ?nbBicycleAv . }
+		OPTIONAL { ?parking geo:lat ?lat . }
+		OPTIONAL { ?parking geo:long ?long . }
+	} """
 
-	g = Graph()
-	g.parse(data = ldprContent,format="turtle")
+	results = g.query(query)
+	parkings = []
+	for result in results:
+			parking = {}
 
-	resource["data"] = g.serialize(format="turtle")
-	query = "SELECT * WHERE { <resource> <http://www.w3.org/ns/ldp#contains> ?x }"
-	query = query.replace("resource", ldpr)
-	qResult = g.query(query)
-	children = []
-	for row in qResult:
-		iri = row[0]
-		children.append({"name":getName(iri),"iri":iri,"fetch":0})
-	resource["children"] = children
-	resource["fetch"] = 1
+			parking["iri"] = result[0]
+			parking["carAV"] = result[1]
+			parking["motoAV"] = result[2]
+			parking["bicyleAV"] = result[3]
+			parking["geoLat"] = result[4]
+			parking["geoLong"] = result[5]
+			parking["label"] = result[6]
 
+			parkings.append(parking)
 	
-	resourceStr = json.dumps(resource)
-	return resourceStr
+	return json.dumps(parkings)
+	
 
 if __name__ == "__main__":
 	app.debug = True

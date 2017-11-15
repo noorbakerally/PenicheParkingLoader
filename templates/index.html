@@ -6,7 +6,6 @@
 
 
 	<body ng-app="myApp" ng-controller="myCtrl">
-		
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	        <div class="container">
 	            <!-- Brand and toggle get grouped for better mobile display -->
@@ -20,7 +19,7 @@
 	                        <a href="#">RDF Graph URL</a>
 	                    </li>
 	                    <li>
-	                    	<input class="form-control input-sm" id="inputsm" type="text" style="margin-top:10px;width:330px" ng-model="rootContainer">
+	                    	<input class="form-control input-sm" id="inputsm" type="text" style="margin-top:10px;width:430px" ng-model="rdfGraphURL">
 	                    </li>
 	                    <li>
 	                    	<button type="button" class="btn btn-primary" style="margin-top:8px;margin-left:2px" ng-click="load()">Load</button>
@@ -32,8 +31,11 @@
 
 
 
-    	 <div class="container">
-
+    	 <div class="parkings">
+    	 		
+    	 		<div ng-if="loading" style="text-align: center">
+                	<img src="%% url_for('static', filename='images/loading.gif') %%"><br/>Loading Parkings
+                </div>
     	 	
 
     	 

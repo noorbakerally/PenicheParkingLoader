@@ -1,8 +1,8 @@
 angular.module('myApp').factory('getDataService', ['$q','$http', function($q,$http) {
     return {
-        getData: function (node) {
+        getData: function (iri) {
             var deferred = $q.defer();
-            var url = "getResource?ldpr="+node.iri;
+            var url = "getResource?url="+iri;
             $http.get(url).then(function(response) {deferred.resolve(response.data);});
             return deferred.promise;
         }
