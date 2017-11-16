@@ -4,8 +4,9 @@ from flask import request
 import requests 
 import json
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
-
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
 jinja_options = app.jinja_options.copy()
 
