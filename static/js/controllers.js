@@ -26,7 +26,6 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
             $scope.loading = false;
             $scope.test = "test";
             $scope.parkings = result;
-            console.log($scope.parkings);
         }, function(){
             
         });

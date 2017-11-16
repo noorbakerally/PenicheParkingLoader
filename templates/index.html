@@ -39,14 +39,29 @@
                 	<img src="%% url_for('static', filename='images/loading.gif') %%"><br/>Loading Parkings
                 </div>
     	 	
-               <input class="form-control input-sm" id="inputsm" type="text" style="margin-top:10px;width:430px" ng-model="parkings">
-    	 
-    	 		
-               
-   				<div ng-repeat="parking in parking1">
-				  do something {{parking}}
-				</div>
-
+                 	
+               	<table ng-if="!loading" class="table">
+				  <caption>List of Parkings</caption>
+				  <thead>
+				    <tr>
+				      <th scope="col">Name</th>
+				      <th scope="col">Car Av.</th>
+				      <th scope="col">Moto Av.</th>
+				      <th scope="col">Bicycle Av.</th>
+				      <th scope="col">Lat</th>
+				      <th scope="col">Long</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	<tr ng-repeat="parking in parkings">
+				  		<td><a href="{{ parking.iri }}">{{ parking.label }}</a></td>
+				  		<td>{{ parking.carAV }}</td>
+				  		<td>{{ parking.motoAV }}</td>
+				  		<td>{{ parking.bicycleAV }}</td>
+				  		<td>{{ parking.geoLat }}</td>
+						<td>{{ parking.geoLong }}</td>
+				  </tbody>
+				</table>
     	 </div>
 	</body>
 
