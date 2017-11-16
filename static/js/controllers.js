@@ -21,22 +21,16 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
     $scope.rdfGraphURL = "http://opensensingcity.emse.fr/penishe/parking.nantes.ttl";
 
     $scope.load = function (){
-        $scope.home = false;
-        $scope.loading = false;
-        $scope.configuration = false;
-        
-        
-        $scope.loading =true;
+        $scope.loading = true;
         getDataService.getData($scope.rdfGraphURL).then(function(result) {
-            
-            
-
+            $scope.loading = false;
+            $scope.test = "test";
+            $scope.parkings = result;
+            console.log($scope.parkings);
         }, function(){
             
         });
     }
-
-    
 
 
 });
