@@ -18,7 +18,7 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
         $scope.configuration = false;
     };
 
-    $scope.rdfGraphURL = "http://opensensingcity.emse.fr/penishe/parking.nantes.ttl";
+    $scope.rdfGraphURL = "http://opensensingcity.emse.fr/peniche/parking.nantes.ttl";
 
     $scope.load = function (){
         $scope.loading = true;
