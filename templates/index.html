@@ -29,24 +29,25 @@
 	    				<input class="form-control input-sm" id="inputsm" type="text" ng-model="rdfGraphURL"/>
 	    			</div>
 	    			<div class="col-md-2">
-	    				<button type="button" class="btn btn-primary" ng-click="load()" style="width: 100%">Load</button>
+	    				<button type="button" class="btn btn-primary" ng-click="load()" style="width: 100%">Load Parkings</button>
 	    			</div>
 	    		</div>
 	    		<br/>
 	    		<div class="row">
 					<div class="col-md-6">
-						<input class="form-control input-sm" id="inputsm" type="text" ng-model="address" ng-model="address"/>
+						<span>Address:</span><input class="form-control input-sm" id="inputsm" type="text" ng-model="address" ng-model="address"/>
 					</div>
 
 					<div class="col-md-2">
-						<input class="form-control input-sm" id="inputsm" type="text" ng-model="lat" />
+						<span>Latitude:</span><input class="form-control input-sm" id="inputsm" type="text" ng-model="lat" />
 					</div>
 
 					<div class="col-md-2">
-						<input class="form-control input-sm" id="inputsm" type="text" ng-model="long" />
+						<span>Longitude:</span><input class="form-control input-sm" id="inputsm" type="text" ng-model="long" />
 					</div>
 
 					<div class="col-md-2">
+						<br/>
 						<button type="button" class="btn btn-primary" ng-click="loadAddress();" style="width: 100%">Load Address</button>
 					</div>
 	    		</div>
