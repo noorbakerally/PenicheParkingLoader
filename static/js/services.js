@@ -2,7 +2,7 @@ angular.module('myApp').factory('getDataService', ['$q','$http', function($q,$ht
     return {
         getData: function (iri) {
             var deferred = $q.defer();
-            var url = "http://opensensingcity.emse.fr/parkingloader/getResource?url="+iri;
+            var url = "getResource?url="+iri;
             $http.get(url).then(function(response) {deferred.resolve(response.data);});
             return deferred.promise;
         }

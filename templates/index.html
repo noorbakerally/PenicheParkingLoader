@@ -1,6 +1,11 @@
  <html lang="en-US">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="http://opensensingcity.emse.fr/peniche/static/css/app.css">
+
+ 	<head>
+ 		<meta name="viewport" content="width=device-width,initial-scale=1">
+ 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/css/app.css">
+ 	</head>
+	
 
 
 
@@ -9,74 +14,103 @@
 
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	        <div class="container">
-	            <!-- Brand and toggle get grouped for better mobile display -->
-	            <div class="navbar-header">
-	                <a class="navbar-brand" href="http://opensensingcity.emse.fr/ldp-browser/#/">Parking Loader</a>
-	            </div>
-	            <!-- Collect the nav links, forms, and other content for toggling -->
-	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	                <ul class="nav navbar-nav">
-	                    <li>
-	                        <a href="#">RDF Graph URL</a>
-	                    </li>
-	                    <li>
-	                    	<input class="form-control input-sm" id="inputsm" type="text" style="margin-top:10px;width:430px" ng-model="rdfGraphURL">
-	                    </li>
-	                    <li>
-	                    	<button type="button" class="btn btn-primary" style="margin-top:8px;margin-left:2px" ng-click="load()">Load</button>
-	                    </li>
-	                </ul>
-	            </div>
+	            <center>
+	            	<div class="navbar-header">
+	                	<a class="navbar-brand" href="http://opensensingcity.emse.fr/ldp-browser/#/">Parking Loader</a>
+	            	</div>
+	            </center>
 	        </div>
     	</nav>
 
 
+    	<div class="container">
+	    		<div class="row">
+	    			<div class="col-md-10">
+	    				<input class="form-control input-sm" id="inputsm" type="text" ng-model="rdfGraphURL"/>
+	    			</div>
+	    			<div class="col-md-2">
+	    				<button type="button" class="btn btn-primary" ng-click="load()" style="width: 100%">Load</button>
+	    			</div>
+	    		</div>
+	    		<br/>
+	    		<div class="row">
+					<div class="col-md-6">
+						<input class="form-control input-sm" id="inputsm" type="text" ng-model="address" ng-model="address"/>
+					</div>
+
+					<div class="col-md-2">
+						<input class="form-control input-sm" id="inputsm" type="text" ng-model="lat" />
+					</div>
+
+					<div class="col-md-2">
+						<input class="form-control input-sm" id="inputsm" type="text" ng-model="long" />
+					</div>
+
+					<div class="col-md-2">
+						<button type="button" class="btn btn-primary" ng-click="loadAddress();" style="width: 100%">Load Address</button>
+					</div>
+	    		</div>
+    	</div>
 
 
-    	 <div class="parkings">
-    	 		
-    	 		<div ng-if="loading" style="text-align: center">
-                	<img src="http://opensensingcity.emse.fr/peniche/static/images/loading.gif"><br/>Loading Parkings
-                </div>
-    	 	
-                 	
-               	<table ng-if="!loading" class="table">
-				  <caption>List of Parkings</caption>
-				  <thead>
-				    <tr>
-				      <th scope="col">Name</th>
-				      <th scope="col">Car Av.</th>
-				      <th scope="col">Moto Av.</th>
-				      <th scope="col">Bicycle Av.</th>
-				      <th scope="col">Lat</th>
-				      <th scope="col">Long</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				  	<tr ng-repeat="parking in parkings">
-				  		<td><a href="{{ parking.iri }}">{{ parking.label }}</a></td>
-				  		<td>{{ parking.carAV }}</td>
-				  		<td>{{ parking.motoAV }}</td>
-				  		<td>{{ parking.bicycleAV }}</td>
-				  		<td>{{ parking.geoLat }}</td>
-						<td>{{ parking.geoLong }}</td>
-				  </tbody>
-				</table>
+    	
+
+
+    	<div class="container">
+	    	 <div class="row">
+	    	 		<div ng-if="loading" style="text-align: center">
+	                	<img src="/static/images/loading.gif"><br/>Loading Parkings
+	                </div>
+	    	 </div>
     	 </div>
+
+    	 <div class="container">
+    	 		<div class="row">
+    	 			<div class="col-md-12">
+    	 				<div class="table-responsive">
+	    	 				<table ng-if="!loading" class="table" ng-table="tableParams">
+							  <thead>
+							    <tr>
+							      <th scope="col">Name</th>
+							      <th scope="col">Car Av.</th>
+							      <th scope="col">Moto Av.</th>
+							      <th scope="col">Bicycle Av.</th>
+							      <th scope="col">Lat</th>
+							      <th scope="col">Long</th>
+							      <th scope="col" ng-if="distance">Distance</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							  	<tr ng-repeat="parking in parkings">
+							  		<td><a href="{{ parking.iri }}">{{ parking.label }}</a></td>
+							  		<td>{{ parking.carAV }}</td>
+							  		<td>{{ parking.motoAV }}</td>
+							  		<td>{{ parking.bicycleAV }}</td>
+							  		<td>{{ parking.geoLat }}</td>
+									<td>{{ parking.geoLong }}</td>
+									<td ng-if="distance">{{ parking.distance }}</td>
+							  </tbody>
+							</table>
+						</div>
+    	 			</div>
+    	 		</div>
+    	 </div>
+
 	</body>
 
 
-
-
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyBYuZ4YkEdDCJ-niFt8SLlLCmqtGCJfNjo"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-	<script src="http://opensensingcity.emse.fr/peniche/static/lib/angular/angular-animate.min.js"></script>
-	<script src="http://opensensingcity.emse.fr/peniche/static/lib/angular/angular-recursion.js"></script>
-	<script src="http://opensensingcity.emse.fr/peniche/static/lib/bootstrap/ui-bootstrap-tpls-2.1.3.min.js"></script>
-	<script src="http://opensensingcity.emse.fr/peniche/static/js/app.js"></script>
-	<script src="http://opensensingcity.emse.fr/peniche/static/js/controllers.js"></script>
-	<script src="http://opensensingcity.emse.fr/peniche/static/js/services.js"></script>
-	<script src="http://opensensingcity.emse.fr/peniche/static/js/routes.js"></script> 
+	<script src="/static/lib/angular/angular-animate.min.js"></script>
+	<script src="/static/lib/angular/angular-recursion.js"></script>
+	<script src="/static/lib/bootstrap/ui-bootstrap-tpls-2.1.3.min.js"></script>
+	<script src="/static/js/app.js"></script>
+	<script src="/static/js/controllers.js"></script>
+	<script src="/static/js/services.js"></script>
+	<script src="/static/js/routes.js"></script>  
+	<script src="/static/js/angular-tablesort.js"></script>
+	<link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+	<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
 
-    
 </html>

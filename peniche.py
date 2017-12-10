@@ -5,7 +5,7 @@ import requests
 import json
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
 from flask_cors import CORS
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='/static')
 CORS(app)
 
 jinja_options = app.jinja_options.copy()
@@ -31,16 +31,17 @@ def getName(s):
 @app.route("/getResource")
 def getResource():
 	url = request.args.get('url')
+	
 
 	g = Graph ()
 	g.parse(url,format="turtle")
 
 	query = """
-	PREFIX pk: <http://opensensingcity.emse.fr/parking/ontology/>
+	PREFIX pk: <http://opensensingcity.emse.fr/ontologies/parking/>
 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 	SELECT ?parking ?nbCarAv ?nbMotocycleAv ?nbBicycleAv ?lat ?long ?label
 	WHERE {
-		?parking a pk:ParkingPlace .
+		?parking a pk:ParkingFacility .
 		OPTIONAL { ?parking rdfs:label  ?label . }
 		OPTIONAL { ?parking pk:nbCarParkingPlaces ?nbCarAv . }
 		OPTIONAL { ?parking pk:nbBicycleParkingPlaces ?nbBicyleAv . }
@@ -49,7 +50,6 @@ def getResource():
 		OPTIONAL { ?parking geo:lat ?lat . }
 		OPTIONAL { ?parking geo:long ?long . }
 	} """
-
 	results = g.query(query)
 	parkings = {}
 	for result in results:
@@ -59,8 +59,8 @@ def getResource():
 			parking["carAV"] = result[1]
 			parking["motoAV"] = result[2]
 			parking["bicyleAV"] = result[3]
-			parking["geoLat"] = result[4]
-			parking["geoLong"] = result[5]
+			parking["geoLat"] = float(result[4])
+			parking["geoLong"] = float(result[5])
 			parking["label"] = result[6]
 
 			parkings[parking["iri"]] = parking
@@ -70,4 +70,4 @@ def getResource():
 
 if __name__ == "__main__":
 	app.debug = True
-	app.run(port=5051)
+	app.run(host= '0.0.0.0',port=5051)
