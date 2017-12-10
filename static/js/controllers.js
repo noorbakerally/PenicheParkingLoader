@@ -10,6 +10,8 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
     $scope.distance = false;
     $scope.address = "Saint Etienne";
 
+    $scope.sortStatus = true;
+
     function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
       var R = 6371; // Radius of the earth in km
       var dLat = deg2rad(lat2-lat1);  // deg2rad below
@@ -33,10 +35,20 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
             var parking = $scope.parkings[i];
             parking.distance = getDistanceFromLatLonInKm(parking.geoLat,parking.geoLong,$scope.lat,$scope.long)
         }
-        
+
 
     };
 
+    $scope.sort = function (){
+        console.log("sort");
+        if ($scope.sortStatus){
+            $scope.parkings.sort(function(a, b) { return a.distance - b.distance; })
+            $scope.sortStatus = false;
+        } else {
+            $scope.parkings.sort(function(a, b) { return b.distance - a.distance; })
+            $scope.sortStatus = true;
+        }
+    };
     $scope.loadAddress = function (){
         var geocoder = new google.maps.Geocoder();
         var address = $scope.address;

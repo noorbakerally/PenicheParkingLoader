@@ -51,7 +51,7 @@ def getResource():
 		OPTIONAL { ?parking geo:long ?long . }
 	} """
 	results = g.query(query)
-	parkings = {}
+	parkings = []
 	for result in results:
 			parking = {}
 
@@ -63,7 +63,7 @@ def getResource():
 			parking["geoLong"] = float(result[5])
 			parking["label"] = result[6]
 
-			parkings[parking["iri"]] = parking
+			parkings.append(parking)
 	
 	return json.dumps(parkings)
 	
