@@ -1,4 +1,4 @@
-angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope,$http,$route,getDataService,getDataService1) {
+angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope,$http,$route,getDataService,osmService,getDataService1) {
 
        
     
@@ -50,22 +50,18 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
         }
     };
     $scope.loadAddress = function (){
-        var geocoder = new google.maps.Geocoder();
         var address = $scope.address;
-        geocoder.geocode( { 'address': address}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            var latitude = results[0].geometry.location.lat();
-            var longitude = results[0].geometry.location.lng();
-            $scope.lat = latitude;
-            $scope.long = longitude;
-            $scope.distance = true;
-            $scope.setParkingDistance();
-            
-            $scope.$apply();
-          } 
-        }); 
-
-
+        osmService.getLatLong($scope.address).then(function(result) {
+           console.log("osm");
+           address = result[0];
+           var latitude = address.lat;
+           var longitude = address.lon;
+           $scope.lat = latitude;
+           $scope.long = longitude;
+           $scope.distance = true;
+           $scope.setParkingDistance();
+        }, function(){          
+        });
     };
 
     $scope.isAllowedContentType = function (contenType) {
