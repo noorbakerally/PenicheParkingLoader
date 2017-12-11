@@ -88,9 +88,8 @@
 							  <thead>
 							    <tr>
 							      <th scope="col">Name</th>
-							      <th scope="col">Car Av.</th>
-							      <th scope="col">Moto Av.</th>
-							      <th scope="col">Bicycle Av.</th>
+							      <th scope="col">Total Capacity</th>
+							      <th scope="col">Available Quantity</th>
 							      <th scope="col">Lat</th>
 							      <th scope="col">Long</th>
 							      <th scope="col" ng-if="distance" ng-click="sort();" style="cursor:pointer;" title="sort">Distance</th>
@@ -99,9 +98,8 @@
 							  <tbody>
 							  	<tr ng-repeat="parking in parkings">
 							  		<td><a href="{{ parking.iri }}">{{ parking.label }}</a></td>
-							  		<td>{{ parking.carAV }}</td>
-							  		<td>{{ parking.motoAV }}</td>
-							  		<td>{{ parking.bicycleAV }}</td>
+							  		<td>{{ parking.totalCapacity }}</td>
+							  		<td>{{ parking.availableQty }}</td>
 							  		<td>{{ parking.geoLat }}</td>
 									<td>{{ parking.geoLong }}</td>
 									<td ng-if="distance">{{ parking.distance }}</td>
