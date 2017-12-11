@@ -5,7 +5,9 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
     $scope.home = true;
     $scope.allowedContentType = ["application/json","text/turtle"]
     $scope.loading = false;
-    $scope.rdfGraphURL = "http://opensensingcity.emse.fr/data/data/static-rdf/nantes/nantes.parking.ttl";
+    
+    $scope.static = "http://opensensingcity.emse.fr/data/parkings.json";
+    $scope.dynamic   = "https://data.hikob.com/osc/parking";
 
     $scope.distance = false;
     $scope.address = "Saint Etienne";
@@ -79,7 +81,8 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
     };
     $scope.load = function (){
         $scope.loading = true;
-        getDataService.getData($scope.rdfGraphURL).then(function(result) {
+        
+        getDataService.getData($scope.static,$scope.dynamic).then(function(result) {
             $scope.loading = false;
             $scope.test = "test";
             $scope.parkings = result;
@@ -87,6 +90,7 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
         }, function(){
             
         });
+
     }
 
 

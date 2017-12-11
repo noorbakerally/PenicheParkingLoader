@@ -25,11 +25,26 @@
 
     	<div class="container">
 	    		<div class="row">
-	    			<div class="col-md-10">
-	    				<input class="form-control input-sm" id="inputsm" type="text" ng-model="rdfGraphURL"/>
+	    			<div class="col-md-2">
+	    				Static source:
+	    			</div>
+	    			<div class="col-md-8">
+	    				<input class="form-control input-sm" id="inputsm" type="text" ng-model="static"/>
 	    			</div>
 	    			<div class="col-md-2">
-	    				<button type="button" class="btn btn-primary" ng-click="load()" style="width: 100%">Load Parkings</button>
+	    				<button type="button" class="btn btn-primary" ng-click="load()" style="width: 100%">Load</button>
+	    			</div>
+	    		</div>
+	    		<br/>
+	    		<div class="row">
+	    			<div class="col-md-2">
+	    				Dynamic source:
+	    			</div>
+	    			<div class="col-md-8">
+	    				<input class="form-control input-sm" id="inputsm" type="text" ng-model="dynamic"/>
+	    			</div>
+	    			<div class="col-md-2">
+	    				<button type="button" class="btn btn-primary" ng-click="load()" style="width: 100%">Load</button>
 	    			</div>
 	    		</div>
 	    		<br/>
@@ -108,9 +123,6 @@
 	<script src="/static/js/app.js"></script>
 	<script src="/static/js/controllers.js"></script>
 	<script src="/static/js/services.js"></script>
-	<script src="/static/js/routes.js"></script>  
-	<script src="/static/js/angular-tablesort.js"></script>
-	<link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
-	<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+	<script src="/static/js/routes.js"></script> 
 
 </html>
