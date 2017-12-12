@@ -67,7 +67,7 @@ def getResource():
 	loadFromURL(g,dynamic)
 
 	query = """
-	PREFIX geo: <ttp://www.w3.org/2003/01/geo/wgs84_pos#> 
+	PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
 	PREFIX grepark: <http://opensensingcity.emse.fr/data/parking/grenoble/> 
 	PREFIX mv: <http://schema.mobivoc.org/> 
 	PREFIX o: <http://opensensingcity.emse.fr/ontologies/availability/>
