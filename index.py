@@ -6,6 +6,7 @@ import json
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
 from flask_cors import CORS
 import urllib2
+import validators
 
 app = Flask(__name__,static_url_path='/static')
 CORS(app)
@@ -50,8 +51,11 @@ def getResource():
 	dynamic = request.args.get('dynamic')
 
 	g = Graph ()
-	g.parse(data=loadData(static),format="turtle")
-	g.parse(data=loadData(dynamic),format="turtle")
+	if validators.url(static):
+		g.parse(data=loadData(static),format="turtle")
+	
+	if validators.url(dynamic):
+		g.parse(data=loadData(dynamic),format="turtle")
 
 	query = """
 	PREFIX geo: <ttp://www.w3.org/2003/01/geo/wgs84_pos#> 
