@@ -88,6 +88,9 @@
 							  <thead>
 							    <tr>
 							      <th scope="col">Name</th>
+							      <th scope="col">Bike Capacity</th>
+							      <th scope="col">Car Capacity</th>
+							      <th scope="col">Moto Capacity</th>
 							      <th scope="col">Total Capacity</th>
 							      <th scope="col">Available Quantity</th>
 							      <th scope="col">Lat</th>
@@ -98,6 +101,9 @@
 							  <tbody>
 							  	<tr ng-repeat="parking in parkings">
 							  		<td><a href="{{ parking.iri }}">{{ parking.label }}</a></td>
+							  		<td>{{ parking.bike }}</td>
+							  		<td>{{ parking.moto }}</td>
+							  		<td>{{ parking.car }}</td>
 							  		<td>{{ parking.totalCapacity }}</td>
 							  		<td>{{ parking.availableQty }}</td>
 							  		<td>{{ parking.geoLat }}</td>

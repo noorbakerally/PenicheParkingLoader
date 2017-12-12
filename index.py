@@ -77,7 +77,7 @@ def getResource():
 	PREFIX xml: <http://www.w3.org/XML/1998/namespace> 
 	PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-	SELECT ?parking ?label ?totalCapacity ?availableQty ?lat ?long
+	SELECT ?parking ?label ?totalCapacity ?availableQty ?lat ?long ?bike ?car ?moto
 	WHERE {
 		?parking a mv:ParkingFacility .
 		OPTIONAL { ?parking rdfs:label  ?label . }
@@ -85,6 +85,9 @@ def getResource():
 		OPTIONAL { ?parking o:availability/o:availableQuantity ?availableQty . }
 		OPTIONAL { ?parking geo:lat ?lat . }
 		OPTIONAL { ?parking geo:long ?long . }
+		OPTIONAL { ?parking mv:numberOfBicycleParkingSpaces ?bike . }
+		OPTIONAL { ?parking mv:numberOfCarParkingSpaces ?car . }
+		OPTIONAL { ?parking mv:numberOfMotorbikeParkingSpaces ?moto . }
 	} """
 	results = g.query(query)
 	parkings = []
@@ -97,6 +100,9 @@ def getResource():
 			parking["availableQty"] = result[3]
 			parking["geoLat"] = float(result[4])
 			parking["geoLong"] = float(result[5])
+			parking["bike"] = result[6]
+			parking["moto"] = result[7]
+			parking["car"] = result[8]
 			
 
 			parkings.append(parking)
