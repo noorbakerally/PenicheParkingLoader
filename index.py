@@ -23,6 +23,18 @@ jinja_options.update(dict(
 ))
 app.jinja_options = jinja_options
 
+def loadFromURL(g,url):
+        if validators.url(url):
+                if ".json" in url or "." not in url:
+                        g.parse(data=loadData(url),format="turtle")
+                elif ".xml" in url:
+                        g.parse(url,format="xml")
+                elif ".n3" in url:
+                        g.parse(url,format="n3")
+                elif ".ttl" in url:
+                        g.parse(url,format="turtle")
+                else:
+                        g.parse(data=loadData(url),format="turtle")
 
 
 cservice = "http://rdfvalidator.mybluemix.net/validate"
@@ -51,11 +63,8 @@ def getResource():
 	dynamic = request.args.get('dynamic')
 
 	g = Graph ()
-	if validators.url(static):
-		g.parse(data=loadData(static),format="turtle")
-	
-	if validators.url(dynamic):
-		g.parse(data=loadData(dynamic),format="turtle")
+	loadFromURL(g,static)
+	loadFromURL(g,dynamic)
 
 	query = """
 	PREFIX geo: <ttp://www.w3.org/2003/01/geo/wgs84_pos#> 
