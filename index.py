@@ -24,6 +24,11 @@ jinja_options.update(dict(
 app.jinja_options = jinja_options
 
 def loadFromURL(g,url):
+	if "sparql-generate" in url:
+		url = urllib2.unquote(url)
+		g.parse(url,format="turtle")
+		return
+
         if validators.url(url):
                 if ".json" in url or "." not in url:
                         g.parse(data=loadData(url),format="turtle")

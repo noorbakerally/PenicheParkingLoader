@@ -81,8 +81,9 @@ angular.module('myApp').controller('myCtrl', function($timeout,$rootScope,$scope
     };
     $scope.load = function (){
         $scope.loading = true;
-        
-        getDataService.getData($scope.static,$scope.dynamic).then(function(result) {
+	staticURL = encodeURIComponent($scope.static)
+	dynamicURL = encodeURIComponent($scope.dynamic)        
+        getDataService.getData(staticURL,dynamicURL).then(function(result) {
             $scope.loading = false;
             $scope.test = "test";
             $scope.parkings = result;
